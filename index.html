@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Binance</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        color: #333;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        margin: 20px 0;
+        color: #f0b90b;
+      }
+
+      .symbol-select-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .symbol-select {
+        padding: 10px 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        background-color: white;
+        font-size: 16px;
+        min-width: 150px;
+        cursor: pointer;
+        color: #333;
+        outline: none;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px top 50%;
+        background-size: 12px auto;
+        padding-right: 30px;
+      }
+
+      .symbol-select:hover {
+        border-color: #c0c0c0;
+      }
+
+      .symbol-select:focus {
+        border-color: #f0b90b;
+        box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.2);
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+        justify-content: center;
+      }
+
+      button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 500;
+      }
+
+      .interval-btn {
+        background-color: #e0e0e0;
+        color: #333;
+      }
+
+      .interval-btn:hover {
+        background-color: #d0d0d0;
+      }
+
+      .interval-btn.active {
+        background-color: #f0b90b;
+        color: #fff;
+      }
+
+      .copy-data-btn {
+        background-color: #1e88e5;
+        color: white;
+        margin-left: auto;
+      }
+
+      .copy-data-btn:hover {
+        background-color: #1976d2;
+      }
+
+      .data-container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+
+      .data-container div {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        line-height: 1.5;
+        white-space: pre-line;
+      }
+
+      .data-container div:hover {
+        background-color: #f9f9f9;
+      }
+
+      .data-container div:last-child {
+        border-bottom: none;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 20px;
+        font-style: italic;
+        color: #777;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @media (max-width: 600px) {
+        .controls {
+          flex-direction: column;
+        }
+
+        .copy-data-btn {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .symbol-select {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Binance</h1>
+    <div class="symbol-select-container">
+      <select name="symbol" class="symbol-select">
+        <option value="BTCUSDT">BTCUSDT</option>
+        <option value="SOLUSDT">SOLUSDT</option>
+        <option value="XRPUSDT">XRPUSDT</option>
+        <option value="LTCUSDT">LTCUSDT</option>
+        <option value="ETHUSDT">ETHUSDT</option>
+        <option value="BNBUSDT">BNBUSDT</option>
+      </select>
+    </div>
+    <div class="controls">
+      <button class="interval-btn">15m</button>
+      <button class="interval-btn">1h</button>
+      <button class="interval-btn">4h</button>
+      <button class="interval-btn active">1d</button>
+      <button class="copy-data-btn">Copy data</button>
+    </div>
+    <div class="data-container hidden"></div>
+
+    <script>
+      const baseUrl = "https://data-api.binance.vision/api/v3/klines";
+      const timeFrameDays = 14;
+
+      const symbolSelect = document.querySelector(".symbol-select");
+      const intervalBtns = document.querySelectorAll(".interval-btn");
+      const copyDataBtn = document.querySelector(".copy-data-btn");
+      const dataContainer = document.querySelector(".data-container");
+
+      const updateData = () => {
+        copyDataBtn.textContent = "Copy data";
+        dataContainer.innerHTML = "<div class='loading'>Loading...</div>";
+        dataContainer.classList.remove("hidden");
+
+        const symbol = symbolSelect.value;
+        const activeBtn = document.querySelector(".interval-btn.active");
+        const interval = activeBtn.textContent;
+        const startTime = Date.now() - timeFrameDays * 24 * 60 * 60 * 1000;
+
+        fetch(
+          `${baseUrl}?symbol=${symbol}&interval=${interval}&startTime=${startTime}`
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch data", response.status);
+            }
+            return response;
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            dataContainer.innerHTML = `
+              <h2>Parameters:</h2>
+              <br>
+              <div>Analyze this data:</div>
+              <div>Symbol: ${symbol}</div>
+              <div>Interval: ${interval}</div>
+              <div>Start time: ${new Date(startTime).toLocaleString()}</div>
+              <div>Sort by: oldest first</div>
+              <br>
+              <h2>Candle data:</h2>
+            `;
+            data.forEach((candle) => {
+              const [
+                kline_open_time,
+                open_price,
+                high_price,
+                low_price,
+                close_price,
+                volume,
+                kline_close_time,
+                quote_asset_volume,
+                number_of_trades,
+                taker_buy_base_asset_volume,
+                taker_buy_quote_asset_volume,
+              ] = candle;
+
+              const candleData = `
+                  Kline open time: ${kline_open_time},
+                  Open price: ${open_price},
+                  High price: ${high_price},
+                  Low price: ${low_price},
+                  Close price: ${close_price},
+                  Volume: ${volume},
+                  Kline close time: ${kline_close_time},
+                  Quote asset volume: ${quote_asset_volume},
+                  Number of trades: ${number_of_trades},
+                  Taker buy base asset volume: ${taker_buy_base_asset_volume},
+                  Taker buy quote asset volume: ${taker_buy_quote_asset_volume}
+                `;
+              const candleElement = document.createElement("div");
+              candleElement.textContent = candleData;
+              dataContainer.appendChild(candleElement);
+              // Scroll to the top
+              dataContainer.scrollTo({ top: 0, behavior: "smooth" });
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+
+      copyDataBtn.addEventListener("click", () => {
+        const data = Array.from(dataContainer.children)
+          .map((child) => child.textContent)
+          .join("\n");
+        navigator.clipboard.writeText(data);
+        copyDataBtn.textContent = "Copied!";
+        setTimeout(() => {
+          copyDataBtn.textContent = "Copy data";
+        }, 2000);
+      });
+
+      intervalBtns.forEach((btn) => {
+        const interval = btn.textContent;
+        const startTime = Date.now() - timeFrameDays * 24 * 60 * 60 * 1000;
+
+        btn.addEventListener("click", function () {
+          intervalBtns.forEach((b) => b.classList.remove("active"));
+          this.classList.add("active");
+          updateData();
+        });
+      });
+
+      symbolSelect.addEventListener("change", function () {
+        updateData(this);
+      });
+
+      document.querySelector(".interval-btn.active").click();
+    </script>
+  </body>
+</html>
