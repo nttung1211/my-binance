@@ -411,8 +411,8 @@
             data.push({
               symbol,
               interval,
-              startTime: new Date(startTime).toISOString(),
-              endTime: new Date(now).toISOString(),
+              startTime,
+              endTime,
               candles: candles.map(reformatCandleData),
             });
           }
@@ -431,8 +431,8 @@
           data.push({
             symbol,
             interval,
-            startTime: new Date(startTime).toISOString(),
-            endTime: new Date(now).toISOString(),
+            startTime,
+            endTime,
             candles: candles.map(reformatCandleData),
           });
         }
@@ -486,14 +486,14 @@
 
         return {
           kline_open_time,
+          kline_close_time,
           open_price,
+          close_price,
           high_price,
           low_price,
-          close_price,
-          volume,
-          kline_close_time,
-          quote_asset_volume,
           number_of_trades,
+          volume,
+          quote_asset_volume,
           taker_buy_base_asset_volume,
           taker_buy_quote_asset_volume,
         };
