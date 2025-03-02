@@ -388,6 +388,7 @@
         const symbol = symbolSelect.value;
         const activeBtn = document.querySelector(".interval-btn.active");
         const isAllBtn = activeBtn.classList.contains("all-interval-btn");
+        const now = Date.now();
         const data = [];
 
         if (isAllBtn) {
@@ -404,30 +405,34 @@
               symbol,
               interval,
               startTime,
+              endTime: now,
             });
 
             data.push({
               symbol,
               interval,
-              startTime,
+              startTime: new Date(startTime).toISOString(),
+              endTime: new Date(now).toISOString(),
               candles: candles.map(reformatCandleData),
             });
           }
         } else {
           const interval = activeBtn.textContent;
           const timeFrameDays = activeBtn.previousElementSibling.value;
-          const startTime = Date.now() - timeFrameDays * 24 * 60 * 60 * 1000;
+          const startTime = now - timeFrameDays * 24 * 60 * 60 * 1000;
 
           const candles = await fetchCandleData({
             symbol,
             interval,
             startTime,
+            endTime: now,
           });
 
           data.push({
             symbol,
             interval,
-            startTime,
+            startTime: new Date(startTime).toISOString(),
+            endTime: new Date(now).toISOString(),
             candles: candles.map(reformatCandleData),
           });
         }
@@ -435,9 +440,9 @@
         dataContainer.innerHTML = JSON.stringify(data, null, 2);
       }
 
-      async function fetchCandleData({ symbol, interval, startTime }) {
+      async function fetchCandleData({ symbol, interval, startTime, endTime }) {
         const response = await fetch(
-          `${baseUrl}?symbol=${symbol}&interval=${interval}&startTime=${startTime}`
+          `${baseUrl}?symbol=${symbol}&interval=${interval}&startTime=${startTime}&endTime=${endTime}`
         );
 
         if (!response.ok) {
