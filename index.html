@@ -6,263 +6,365 @@
     <title>My Binance</title>
 
     <style>
+      :root {
+        --primary: #f0b90b;
+        --primary-hover: #dfad0a;
+        --primary-light: rgba(240, 185, 11, 0.1);
+        --bg-color: #f8f9fa;
+        --card-bg: #ffffff;
+        --text-primary: #212529;
+        --text-secondary: #6c757d;
+        --border-color: #e6e9ed;
+        --accent-blue: #0d6efd;
+        --accent-blue-hover: #0b5ed7;
+        --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+        --shadow-md: 0 2px 4px rgba(0,0,0,0.05);
+        --radius-sm: 4px;
+        --radius-md: 6px;
+        --space-xs: 4px;
+        --space-sm: 8px;
+        --space-md: 12px;
+        --space-lg: 16px;
+        --font-sm: 13px;
+        --font-md: 14px;
+        --font-lg: 16px;
+        --transition: all 0.2s ease;
+      }
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       }
 
       body {
-        background-color: #f5f5f5;
-        color: #333;
-        padding: 20px;
-        max-width: 1200px;
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        line-height: 1.5;
+        font-size: var(--font-md);
+        padding: var(--space-md);
+      }
+
+      .container {
+        max-width: 1000px;
         margin: 0 auto;
       }
 
       h1 {
+        font-size: 22px;
         text-align: center;
-        margin: 20px 0;
-        color: #f0b90b;
+        margin-bottom: var(--space-lg);
+        padding-bottom: var(--space-md);
+        border-bottom: 1px solid var(--border-color);
+        color: var(--text-primary);
       }
 
+      h1 span {
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        padding: var(--space-lg);
+        margin-bottom: var(--space-lg);
+      }
+
+      /* Symbol selector styling */
       .symbol-select-container {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
+        margin-bottom: var(--space-md);
       }
 
       .symbol-select {
-        padding: 10px 15px;
-        border: 1px solid #e0e0e0;
-        border-radius: 5px;
-        background-color: white;
-        font-size: 16px;
-        min-width: 150px;
-        cursor: pointer;
-        color: #333;
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+        display: block;
+        padding: 8px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        background-color: var(--card-bg);
+        font-size: var(--font-md);
+        color: var(--text-primary);
         outline: none;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        transition: all 0.2s ease;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        cursor: pointer;
         appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20fill%3D%22%23666%22%3E%3Cpath%20d%3D%22M287%2069a18%2018%200%200%200-13-5H18a18%2018%200%200%200-13%205%2018%2018%200%200%200-5%2013c0%205%202%209%205%2013l128%20128c4%204%208%205%2013%205s9-1%2013-5L287%2095c3-4%205-8%205-13%200-5-2-9-5-13z%22%2F%3E%3C%2Fsvg%3E");
         background-repeat: no-repeat;
-        background-position: right 10px top 50%;
-        background-size: 12px auto;
-        padding-right: 30px;
+        background-position: right 8px center;
+        background-size: 10px;
+        padding-right: 25px;
       }
 
       .symbol-select:hover {
-        border-color: #c0c0c0;
+        border-color: var(--primary);
       }
 
       .symbol-select:focus {
-        border-color: #f0b90b;
-        box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.2);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px var(--primary-light);
       }
 
+      /* Restructured controls layout */
       .controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 20px;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--space-md);
+        margin-bottom: var(--space-lg);
       }
 
-      button {
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-weight: 500;
+      .control-column {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-xs);
+      }
+
+      .control-group input {
+        padding: 6px 8px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        font-size: var(--font-sm);
+        width: 60px;
+        min-width: 50px;
+        outline: none;
+        transition: var(--transition);
+        text-align: center;
       }
 
       .interval-btn {
-        background-color: #e0e0e0;
-        color: #333;
+        background-color: #f1f3f5;
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+        flex: 1;
+      }
+
+      /* Button styling */
+      button {
+        padding: 8px 12px;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-size: var(--font-sm);
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+        white-space: nowrap;
+        width: 100%;
+      }
+
+      .interval-btn {
+        background-color: #f1f3f5;
+        color: var(--text-primary);
+        border: 1px solid var(--border-color);
+        width: 100%;
+        padding: 10px 12px;
       }
 
       .interval-btn:hover {
-        background-color: #d0d0d0;
+        background-color: #e9ecef;
       }
 
       .interval-btn.active {
-        background-color: #f0b90b;
-        color: #fff;
+        background-color: var(--primary);
+        color: white;
+        border-color: var(--primary-hover);
+      }
+
+      .all-interval-btn {
+        grid-column: span 2;
       }
 
       .copy-data-btn {
-        background-color: #1e88e5;
+        background-color: var(--accent-blue);
         color: white;
-        margin-left: auto;
+        grid-column: span 2;
       }
 
       .copy-data-btn:hover {
-        background-color: #1976d2;
+        background-color: var(--accent-blue-hover);
       }
 
+      /* Updated action buttons layout */
+      .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+        margin-top: var(--space-md);
+      }
+
+      /* Data display styling */
       .data-container {
-        background-color: white;
-        border-radius: 8px;
-        padding: 15px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        max-height: 70vh;
+        background-color: var(--card-bg);
+        border-radius: var(--radius-md);
+        padding: var(--space-lg);
+        box-shadow: var(--shadow-md);
+        max-height: 60vh;
         overflow-y: auto;
-      }
-
-      .data-container div {
-        padding: 12px;
-        border-bottom: 1px solid #eee;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        font-size: var(--font-sm);
         line-height: 1.5;
-        white-space: pre-line;
+        white-space: pre-wrap;
+        border: 1px solid var(--border-color);
       }
 
-      .data-container div:hover {
-        background-color: #f9f9f9;
+      .data-container::-webkit-scrollbar {
+        width: 6px;
       }
 
-      .data-container div:last-child {
-        border-bottom: none;
+      .data-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+      }
+
+      .data-container::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
       }
 
       .loading {
-        text-align: center;
-        padding: 20px;
-        font-style: italic;
-        color: #777;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-lg);
+        color: var(--text-secondary);
+        gap: var(--space-sm);
+      }
+
+      .loading::before {
+        content: '';
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(0,0,0,0.1);
+        border-top: 2px solid var(--primary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
 
       .hidden {
         display: none;
       }
 
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .controls {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
       @media (max-width: 600px) {
         .controls {
-          flex-direction: column;
+          grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .action-buttons {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .controls {
+          grid-template-columns: 1fr;
+          gap: var(--space-sm);
+        }
+        
+        .card {
+          padding: var(--space-md);
+        }
+        
+        h1 {
+          font-size: 18px;
+        }
+        
+        .data-container {
+          padding: var(--space-md);
+          font-size: 12px;
         }
 
-        .copy-data-btn {
-          margin-left: 0;
+        .control-group {
+          flex-direction: row;
           width: 100%;
         }
-
-        .symbol-select {
-          width: 100%;
+        
+        .control-group input {
+          width: 50px;
         }
       }
     </style>
   </head>
   <body>
-    <h1>My Binance</h1>
-    <div class="symbol-select-container">
-      <select name="symbol" class="symbol-select">
-        <option value="BTCUSDT">BTCUSDT</option>
-        <option value="SOLUSDT">SOLUSDT</option>
-        <option value="XRPUSDT">XRPUSDT</option>
-        <option value="LTCUSDT">LTCUSDT</option>
-        <option value="ETHUSDT">ETHUSDT</option>
-        <option value="BNBUSDT">BNBUSDT</option>
-      </select>
+    <div class="container">
+      <h1>My <span>Binance</span></h1>
+      
+      <div class="card">
+        <div class="symbol-select-container">
+          <select class="symbol-select">
+            <option value="BTCUSDT">BTCUSDT</option>
+            <option value="SOLUSDT">SOLUSDT</option>
+            <option value="XRPUSDT">XRPUSDT</option>
+            <option value="LTCUSDT">LTCUSDT</option>
+            <option value="ETHUSDT">ETHUSDT</option>
+            <option value="BNBUSDT">BNBUSDT</option>
+          </select>
+        </div>
+        
+        <div class="controls">
+          <div class="control-column">
+            <div class="control-group">
+              <input type="number" min="1" max="365" value="1" />
+              <button class="interval-btn">15m</button>
+            </div>
+            <div class="control-group">
+              <input type="number" min="1" max="365" value="7" />
+              <button class="interval-btn">1h</button>
+            </div>
+          </div>
+          <div class="control-column">
+            <div class="control-group">
+              <input type="number" min="1" max="365" value="7" />
+              <button class="interval-btn">4h</button>
+            </div>
+            <div class="control-group">
+              <input type="number" min="1" max="365" value="7" />
+              <button class="interval-btn active">1d</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <button class="all-interval-btn interval-btn">All</button>
+          <button class="copy-data-btn">Copy data</button>
+        </div>
+      </div>
+      
+      <div class="data-container hidden"></div>
     </div>
-    <div class="controls">
-      <button class="interval-btn">15m</button>
-      <button class="interval-btn">1h</button>
-      <button class="interval-btn">4h</button>
-      <button class="interval-btn active">1d</button>
-      <button class="copy-data-btn">Copy data</button>
-    </div>
-    <div class="data-container hidden"></div>
 
     <script>
       const baseUrl = "https://data-api.binance.vision/api/v3/klines";
-      const timeFrameDays = 14;
 
       const symbolSelect = document.querySelector(".symbol-select");
       const intervalBtns = document.querySelectorAll(".interval-btn");
       const copyDataBtn = document.querySelector(".copy-data-btn");
       const dataContainer = document.querySelector(".data-container");
 
-      const updateData = () => {
-        copyDataBtn.textContent = "Copy data";
-        dataContainer.innerHTML = "<div class='loading'>Loading...</div>";
-        dataContainer.classList.remove("hidden");
-
-        const symbol = symbolSelect.value;
-        const activeBtn = document.querySelector(".interval-btn.active");
-        const interval = activeBtn.textContent;
-        const startTime = Date.now() - timeFrameDays * 24 * 60 * 60 * 1000;
-
-        fetch(
-          `${baseUrl}?symbol=${symbol}&interval=${interval}&startTime=${startTime}`
-        )
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Failed to fetch data", response.status);
-            }
-            return response;
-          })
-          .then((response) => response.json())
-          .then((data) => {
-            dataContainer.innerHTML = `
-              <h2>Parameters:</h2>
-              <br>
-              <div>Analyze this data:</div>
-              <div>Symbol: ${symbol}</div>
-              <div>Interval: ${interval}</div>
-              <div>Start time: ${new Date(startTime).toLocaleString()}</div>
-              <div>Sort by: oldest first</div>
-              <br>
-              <h2>Candle data:</h2>
-            `;
-            data.forEach((candle) => {
-              const [
-                kline_open_time,
-                open_price,
-                high_price,
-                low_price,
-                close_price,
-                volume,
-                kline_close_time,
-                quote_asset_volume,
-                number_of_trades,
-                taker_buy_base_asset_volume,
-                taker_buy_quote_asset_volume,
-              ] = candle;
-
-              const candleData = `
-                  Kline open time: ${kline_open_time},
-                  Open price: ${open_price},
-                  High price: ${high_price},
-                  Low price: ${low_price},
-                  Close price: ${close_price},
-                  Volume: ${volume},
-                  Kline close time: ${kline_close_time},
-                  Quote asset volume: ${quote_asset_volume},
-                  Number of trades: ${number_of_trades},
-                  Taker buy base asset volume: ${taker_buy_base_asset_volume},
-                  Taker buy quote asset volume: ${taker_buy_quote_asset_volume}
-                `;
-              const candleElement = document.createElement("div");
-              candleElement.textContent = candleData;
-              dataContainer.appendChild(candleElement);
-              // Scroll to the top
-              dataContainer.scrollTo({ top: 0, behavior: "smooth" });
-            });
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      };
-
-      copyDataBtn.addEventListener("click", () => {
-        const data = Array.from(dataContainer.children)
-          .map((child) => child.textContent)
-          .join("\n");
-        navigator.clipboard.writeText(data);
+      copyDataBtn.addEventListener("click", function () {
+        navigator.clipboard.writeText(dataContainer.textContent);
         copyDataBtn.textContent = "Copied!";
         setTimeout(() => {
           copyDataBtn.textContent = "Copy data";
@@ -270,21 +372,137 @@
       });
 
       intervalBtns.forEach((btn) => {
-        const interval = btn.textContent;
-        const startTime = Date.now() - timeFrameDays * 24 * 60 * 60 * 1000;
-
-        btn.addEventListener("click", function () {
-          intervalBtns.forEach((b) => b.classList.remove("active"));
-          this.classList.add("active");
-          updateData();
-        });
+        btn.addEventListener("click", handleIntervalChange);
       });
 
-      symbolSelect.addEventListener("change", function () {
-        updateData(this);
-      });
+      symbolSelect.addEventListener("change", handleSymbolChange);
 
       document.querySelector(".interval-btn.active").click();
+
+      async function handleIntervalChange() {
+        intervalBtns.forEach((b) => b.classList.remove("active"));
+        this.classList.add("active");
+        updateData();
+      }
+
+      async function handleSymbolChange() {
+        updateData();
+      }
+
+      async function updateData() {
+        copyDataBtn.textContent = "Copy data";
+        dataContainer.innerHTML = "<div class='loading'>Loading...</div>";
+        dataContainer.classList.remove("hidden");
+
+        const symbol = symbolSelect.value;
+        const activeBtn = document.querySelector(".interval-btn.active");
+        const isAllBtn = activeBtn.classList.contains("all-interval-btn");
+        const data = [];
+
+        if (isAllBtn) {
+          for (const btn of intervalBtns) {
+            if (btn === activeBtn) {
+              continue;
+            }
+
+            const interval = btn.textContent;
+            const timeFrameDays = btn.previousElementSibling.value;
+            const startTime = Date.now() - timeFrameDays * 24 * 60 * 60 * 1000;
+
+            const candles = await fetchCandleData({
+              symbol,
+              interval,
+              startTime,
+            });
+
+            data.push({
+              symbol,
+              interval,
+              startTime,
+              candles: candles.map(reformatCandleData),
+            });
+          }
+        } else {
+          const interval = activeBtn.textContent;
+          const timeFrameDays = activeBtn.previousElementSibling.value;
+          const startTime = Date.now() - timeFrameDays * 24 * 60 * 60 * 1000;
+
+          const candles = await fetchCandleData({
+            symbol,
+            interval,
+            startTime,
+          });
+
+          data.push({
+            symbol,
+            interval,
+            startTime,
+            candles: candles.map(reformatCandleData),
+          });
+        }
+
+        dataContainer.innerHTML = JSON.stringify(data, null, 2);
+      }
+
+      async function fetchCandleData({ symbol, interval, startTime }) {
+        const response = await fetch(
+          `${baseUrl}?symbol=${symbol}&interval=${interval}&startTime=${startTime}`
+        );
+
+        if (!response.ok) {
+          if (
+            response.headers.get("content-type")?.includes("application/json")
+          ) {
+            const error = await response.json();
+            throw new Error("Failed to fetch data", {
+              cause: {
+                status: response.status,
+                error,
+              },
+            });
+          }
+
+          throw new Error("Failed to fetch data", {
+            cause: {
+              status: response.status,
+              error: 'Response content type is not "application/json"',
+            },
+          });
+        }
+
+        return response.json();
+      }
+
+      function reformatCandleData(candle) {
+        const [
+          kline_open_time,
+          open_price,
+          high_price,
+          low_price,
+          close_price,
+          volume,
+          kline_close_time,
+          quote_asset_volume,
+          number_of_trades,
+          taker_buy_base_asset_volume,
+          taker_buy_quote_asset_volume,
+        ] = candle;
+
+        return {
+          kline_open_time,
+          open_price,
+          high_price,
+          low_price,
+          close_price,
+          volume,
+          kline_close_time,
+          quote_asset_volume,
+          number_of_trades,
+          taker_buy_base_asset_volume,
+          taker_buy_quote_asset_volume,
+        };
+      }
+
     </script>
   </body>
 </html>
