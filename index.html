@@ -15,10 +15,10 @@
         --text-primary: #212529;
         --text-secondary: #6c757d;
         --border-color: #e6e9ed;
-        --accent-blue: #0d6efd;
-        --accent-blue-hover: #0b5ed7;
-        --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-        --shadow-md: 0 2px 4px rgba(0,0,0,0.05);
+        --accent-blue: #212529;
+        --accent-blue-hover: #343a40;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.05);
         --radius-sm: 4px;
         --radius-md: 6px;
         --space-xs: 4px;
@@ -35,7 +35,8 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
       }
 
       body {
@@ -211,7 +212,8 @@
         box-shadow: var(--shadow-md);
         max-height: 60vh;
         overflow-y: auto;
-        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+          monospace;
         font-size: var(--font-sm);
         line-height: 1.5;
         white-space: pre-wrap;
@@ -242,18 +244,22 @@
       }
 
       .loading::before {
-        content: '';
+        content: "";
         width: 18px;
         height: 18px;
-        border: 2px solid rgba(0,0,0,0.1);
+        border: 2px solid rgba(0, 0, 0, 0.1);
         border-top: 2px solid var(--primary);
         border-radius: 50%;
         animation: spin 0.8s linear infinite;
       }
 
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
 
       .hidden {
@@ -271,7 +277,7 @@
         .controls {
           grid-template-columns: repeat(2, 1fr);
         }
-        
+
         .action-buttons {
           grid-template-columns: 1fr;
         }
@@ -282,15 +288,15 @@
           grid-template-columns: 1fr;
           gap: var(--space-sm);
         }
-        
+
         .card {
           padding: var(--space-md);
         }
-        
+
         h1 {
           font-size: 18px;
         }
-        
+
         .data-container {
           padding: var(--space-md);
           font-size: 12px;
@@ -300,7 +306,7 @@
           flex-direction: row;
           width: 100%;
         }
-        
+
         .control-group input {
           width: 50px;
         }
@@ -310,7 +316,7 @@
   <body>
     <div class="container">
       <h1>My <span>Binance</span></h1>
-      
+
       <div class="card">
         <div class="symbol-select-container">
           <select class="symbol-select">
@@ -322,7 +328,7 @@
             <option value="BNBUSDT">BNBUSDT</option>
           </select>
         </div>
-        
+
         <div class="controls">
           <div class="control-column">
             <div class="control-group">
@@ -345,13 +351,13 @@
             </div>
           </div>
         </div>
-        
+
         <div class="action-buttons">
           <button class="all-interval-btn interval-btn">All</button>
           <button class="copy-data-btn">Copy data</button>
         </div>
       </div>
-      
+
       <div class="data-container hidden"></div>
     </div>
 
@@ -502,7 +508,6 @@
           taker_buy_quote_asset_volume,
         };
       }
-
     </script>
   </body>
 </html>
