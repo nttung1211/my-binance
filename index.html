@@ -15,8 +15,8 @@
         --text-primary: #212529;
         --text-secondary: #6c757d;
         --border-color: #e6e9ed;
-        --accent-blue: #212529;
-        --accent-blue-hover: #343a40;
+        --accent: #212529;
+        --accent-hover: #343a40;
         --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
         --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.05);
         --radius-sm: 4px;
@@ -74,7 +74,7 @@
         margin-bottom: var(--space-lg);
       }
 
-      /* Symbol selector styling */
+      /* Form elements */
       .symbol-select-container {
         margin-bottom: var(--space-md);
       }
@@ -102,16 +102,26 @@
         padding-right: 25px;
       }
 
+      input[type="number"],
+      .symbol-select {
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        outline: none;
+        transition: var(--transition);
+      }
+
+      input[type="number"]:hover,
       .symbol-select:hover {
         border-color: var(--primary);
       }
 
+      input[type="number"]:focus,
       .symbol-select:focus {
         border-color: var(--primary);
         box-shadow: 0 0 0 2px var(--primary-light);
       }
 
-      /* Restructured controls layout */
+      /* Controls layout */
       .controls {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -134,21 +144,10 @@
 
       .control-group input {
         padding: 6px 8px;
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-sm);
         font-size: var(--font-sm);
         width: 60px;
         min-width: 50px;
-        outline: none;
-        transition: var(--transition);
         text-align: center;
-      }
-
-      .interval-btn {
-        background-color: #f1f3f5;
-        color: var(--text-primary);
-        border: 1px solid var(--border-color);
-        flex: 1;
       }
 
       /* Button styling */
@@ -161,15 +160,14 @@
         cursor: pointer;
         transition: var(--transition);
         white-space: nowrap;
-        width: 100%;
       }
 
       .interval-btn {
         background-color: #f1f3f5;
         color: var(--text-primary);
         border: 1px solid var(--border-color);
-        width: 100%;
         padding: 10px 12px;
+        flex: 1;
       }
 
       .interval-btn:hover {
@@ -182,26 +180,21 @@
         border-color: var(--primary-hover);
       }
 
-      .all-interval-btn {
-        grid-column: span 2;
+      .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+        margin-top: var(--space-md);
       }
 
       .copy-data-btn {
-        background-color: var(--accent-blue);
+        background-color: var(--accent);
         color: white;
-        grid-column: span 2;
+        padding: 10px 12px;
       }
 
       .copy-data-btn:hover {
-        background-color: var(--accent-blue-hover);
-      }
-
-      /* Updated action buttons layout */
-      .action-buttons {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-md);
-        margin-top: var(--space-md);
+        background-color: var(--accent-hover);
       }
 
       /* Data display styling */
@@ -239,7 +232,7 @@
         align-items: center;
         justify-content: center;
         padding: var(--space-lg);
-        color: var(--text-secondary);
+        color: var (--text-secondary);
         gap: var(--space-sm);
       }
 
@@ -274,10 +267,6 @@
       }
 
       @media (max-width: 600px) {
-        .controls {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
         .action-buttons {
           grid-template-columns: 1fr;
         }
@@ -300,11 +289,6 @@
         .data-container {
           padding: var(--space-md);
           font-size: 12px;
-        }
-
-        .control-group {
-          flex-direction: row;
-          width: 100%;
         }
 
         .control-group input {
