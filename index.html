@@ -411,8 +411,8 @@
             data.push({
               symbol,
               interval,
-              startTime,
-              endTime: now,
+              startTime: new Date(startTime).toISOString(),
+              endTime: new Date(now).toISOString(),
               candles: candles.map(reformatCandleData),
             });
           }
@@ -485,8 +485,8 @@
         ] = candle;
 
         return {
-          kline_open_time,
-          kline_close_time,
+          kline_open_time: new Date(kline_open_time).toISOString(),
+          kline_close_time: new Date(kline_close_time).toISOString(),
           open_price,
           close_price,
           high_price,
